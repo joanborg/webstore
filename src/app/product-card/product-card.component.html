@@ -1,0 +1,19 @@
+<div class="container">
+<mat-card 
+*ngIf="product.title"
+[style.minHeight]="'100%'"
+[style.minWidth]="'100%'">
+
+  <img *ngIf="product.imageUrl" mat-card-image [src]="product.imageUrl">
+  <mat-card-content>
+    
+    <mat-card-title>{{ product.title }}</mat-card-title>
+    <mat-card-subtitle>{{ product.price | currency:'EUR':true }}</mat-card-subtitle>
+  </mat-card-content>
+  <mat-card-actions>
+    <button 
+    (click)="addToCart(product)"
+    mat-raised-button color="primary">Add to cart</button>
+  </mat-card-actions>
+</mat-card>
+</div>

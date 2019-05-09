@@ -1,0 +1,33 @@
+<mat-toolbar class="navbar" color="primary">
+
+  <a span routerLink="['']" >webstore</a>
+  <span class="fill-remaining-space"></span> 
+  <span class="navbar-item navbar-item-spacer">
+    <button routerLink="/shoppingcart" mat-button>shopping cart
+    <mat-icon>shopping_cart</mat-icon>
+    </button>
+  </span>
+  <span class="navbar-item navbar-item-spacer">
+    <button *ngIf="appUser; else showLogin" mat-icon-button [matMenuTriggerFor]="menu">{{ appUser.name }}
+      <mat-icon>menu</mat-icon>
+    </button>
+    <ng-template #showLogin>
+        <button mat-icon-button [matMenuTriggerFor]="loginmenu">login
+          <mat-icon>lock</mat-icon>
+        </button>
+    </ng-template>
+    <mat-menu #menu="matMenu">
+      <button routerLink="/myorders" mat-menu-item>my orders</button>
+    <ng-container *ngIf="auth.appUserIsAdmin">
+      <button routerLink="/admin/manageorders" mat-menu-item>manage orders</button>
+      <button routerLink="/admin/manageproducts" mat-menu-item>manage products</button>
+    </ng-container>
+      <button (click)="auth.logout()" mat-menu-item>logout</button>
+    </mat-menu>
+
+    <mat-menu #loginmenu="matMenu">
+      <button (click)="auth.login()" mat-menu-item>Login with Google</button>
+    </mat-menu>
+  </span>
+
+</mat-toolbar>

@@ -1,0 +1,52 @@
+<mat-grid-list cols="2">
+
+    <mat-grid-tile>
+        <form #f="ngForm" (ngSubmit)="save(f.value)" class="example-form">
+            <mat-form-field class="example-full-width">
+                <input #title="ngModel" [(ngModel)]="product.title" name="title" id="title" matInput placeholder="Title"
+                    required>
+                <mat-error *ngIf="title.invalid"> Title is required. </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <input #price="ngModel" [(ngModel)]="product.price" name="price" matInput id="price" placeholder="Price"
+                    required>
+                <mat-error *ngIf="price.invalid"> Price is required. </mat-error>
+                <mat-label>
+                    <mat-icon metPrefix>euro_symbol</mat-icon> Price
+                </mat-label>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <input #imageUrl="ngModel" [(ngModel)]="product.imageUrl" name="imageUrl" matInput id="imageUrl"
+                    placeholder="Image URL" required>
+                <mat-error *ngIf="imageUrl.invalid"> Image URL is required. </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="example-full-width">
+                <mat-select #category="ngModel" [(ngModel)]="product.category" name="category" id="category"
+                    placeholder="Category" required>
+                    <mat-option *ngFor="let c of categories$ | async" [value]="c.payload.key">
+                        {{ c.payload.key }}
+                    </mat-option>
+
+                </mat-select>
+                <mat-error *ngIf="category.invalid"> Category is required. </mat-error>
+            </mat-form-field>
+
+            <button mat-raised-button color="primary">Save</button>
+            <button type="button" mat-raised-button color="warn" (click)="delete()">Delete</button>
+        </form>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <mat-card *ngIf="product.title" class="card">
+            <img *ngIf="product.imageUrl" mat-card-image [src]="product.imageUrl">
+            <mat-card-header>
+                <div mat-card-avatar></div>
+                <mat-card-title>{{ product.title }}</mat-card-title>
+                <mat-card-subtitle>{{ product.price | currency:'EUR':true }}</mat-card-subtitle>
+            </mat-card-header>
+        </mat-card>
+    </mat-grid-tile>
+    
+</mat-grid-list>
