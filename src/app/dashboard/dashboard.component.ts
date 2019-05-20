@@ -37,12 +37,16 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit() {
     this.breakpoint = (window.innerWidth <= 450) ? 1 : 2;
+    if (window.innerWidth >= 1200) this.breakpoint = 3;
   }
 
 
-  // if the view width is <= 450px, the columns collapse into one column
+  // shows additional columns when view width is higher
+  // TODO: more elegant solution?
   onResize(event) {
-    this.breakpoint = (event.target.innerWidth <= 450) ? 1 : 2;
+    if (event.target.innerWidth <= 450) this.breakpoint = 1;
+    else if (event.target.innerWidth < 1200) this.breakpoint = 2;
+    else if (event.target.innerWidth >= 1200) this.breakpoint = 3;
   }
 
 }

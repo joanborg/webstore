@@ -3,6 +3,7 @@ import { CategoryService } from '../../services/category.service';
 import { ProductService } from 'src/app/services/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
+import { Product } from 'src/app/models/product';
 
 
 
@@ -14,7 +15,11 @@ import { take } from 'rxjs/operators';
 export class ProductFormComponent  {
     
   categories$;
-  product = {};
+  product: any;
+  emptyProduct = {
+    title: "",
+    price: "",
+  }; /// TODO: find a better way  
   id;
 
   constructor(
@@ -25,6 +30,7 @@ export class ProductFormComponent  {
     this.categories$ = categoryService.getAll();
     this.id = this.route.snapshot.paramMap.get('id'); // takes product id from activated route
     if (this.id) this.productService.get(this.id).pipe(take(1)).subscribe(res => this.product = res); // fetches a product matching the id from database
+    else this.product = this.emptyProduct;
    }
  
 
